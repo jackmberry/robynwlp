@@ -1,0 +1,178 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="http://ogp.me/ns/fb#">
+  <head>
+    <title itemprop="name">Robyn Graham - Wildlife Photography</title>
+    <meta property="og:image" content="img/wolf3.JPG" />
+    <meta name="robots" content="noindex">
+    <meta name="keywords" content="wildlife,instagram,photography,animals,nature,photo,picture,print,canvas,robyn,graham,amateur,professional,snaps,vacation">
+    <link href=’http://fonts.googleapis.com/css?family=Roboto’ rel=’stylesheet’ type=’text/css’>
+    <html lang="en" xml:lang="en" xmlns="http://www.w3.org/1999/xhtml">
+    <style>
+        @import "http://webfonts.ru/import/notcourier.css";
+
+        body{
+        background:url('img/wolf3.JPG') no-repeat;
+    }
+        .lower{
+        width:35%;
+        margin:10% auto;
+        padding:18px;
+        background:white;
+        opacity:0.8;
+        color:black;
+        box-shadow:inset 0 0 0 1px black;
+        border:30px solid white;
+    }
+
+    .lower:hover{
+        background:black;
+        color:white;
+        box-shadow:inset 0 0 0 1px white;
+        border:30px solid black;
+    }
+
+    input{
+        display:none;
+    }
+
+    .lower label{
+        font-family: 'NotCourierSans';
+        font-size:40px;
+        text-align:center;
+    }
+
+    .lower label:hover{
+        cursor:pointer;
+    }
+
+    .overlay{
+	    position: fixed;
+	    width: 100%;
+	    height: 100%;
+	    top: 0;
+	    left: 0;
+	    background: rgba(0,0,0,0.9);
+    }
+
+    .overlay label{
+	    width: 23px;
+	    height:23px;
+	    position: absolute;
+	    right: 20px;
+	    top: 20px;
+	    background: url('img/cross.png');
+	    z-index: 100;
+        cursor:pointer;
+    }
+
+    .overlay nav {
+	    text-align: center;
+	    position: relative;
+	    top: 50%;
+	    height: 60%;
+	    font-size: 54px;
+	    -webkit-transform: translateY(-50%);
+	    transform: translateY(-50%);
+    }
+
+    .overlay ul {
+	    list-style: none;
+	    padding: 0;
+	    margin: 0 auto;
+	    display: inline-block;
+	    height: 100%;
+	    position: relative;
+    }
+
+    .overlay ul li {
+	    display: block;
+	    height: 20%;
+	    height: calc(100% / 5);
+	    min-height: 54px;
+    }
+
+    .overlay ul li a {
+	    font-weight: 300;
+	    display: block;
+	    color: white;
+        text-decoration:none;
+	    -webkit-transition: color 0.2s;
+	    transition: color 0.2s;
+        font-family: 'NotCourierSans';
+        text-transform:uppercase;
+    }
+
+    .overlay ul li a:hover,
+    .overlay ul li a:focus {
+    	color: #849368;
+    }
+
+    .lower~.overlay-hugeinc{
+	    opacity: 0;
+	    visibility: hidden;
+	    -webkit-transition: opacity 0.5s, visibility 0s 0.5s;
+	    transition: opacity 0.5s, visibility 0s 0.5s;
+    }
+
+    #op:checked~.overlay-hugeinc{
+	    opacity: 1;
+	    visibility: visible;
+	    -webkit-transition: opacity 0.5s;
+	    transition: opacity 0.5s;
+    }
+
+    .overlay-hugeinc nav {
+	    -moz-perspective: 300px;
+    }
+
+    .overlay-hugeinc nav ul {
+	    opacity: 0.4;
+	    -webkit-transform: translateY(-25%) rotateX(35deg);
+	    transform: translateY(-25%) rotateX(35deg);
+	    -webkit-transition: -webkit-transform 0.5s, opacity 0.5s;
+	    transition: transform 0.5s, opacity 0.5s;
+    }
+
+    #op:checked~.overlay-hugeinc nav ul {
+	    opacity: 1;
+	    -webkit-transform: rotateX(0deg);
+	    transform: rotateX(0deg);
+    }
+
+    #op:not(:checked)~.overlay-hugeinc nav ul {
+	    -webkit-transform: translateY(25%) rotateX(-35deg);
+	    transform: translateY(25%) rotateX(-35deg);
+    }
+    </style>
+  </head>
+  <body>
+          <input type="checkbox" id="op"></input>
+        <div class="lower"><center>
+            <label for="op">Robyn Graham</label><br/>
+            <label for="op">Wildlife Photography</label></center>
+        </div>
+       <div class="overlay overlay-hugeinc">
+			<label for="op"></label>
+			<nav>
+				<ul>
+					<li><a href="robyn.html">About</a></li>
+					<li><a href="gallery.html">Gallery</a></li>
+					<li><a href="https://www.instagram.com/robyn_wlp/">Instagram</a></li>
+					<li><a href="contact.html">Contact</a></li>
+				</ul>
+			</nav>
+        </div>
+ 	<script>
+  		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  		ga('create', 'UA-73750578-1', 'auto');
+  		ga('send', 'pageview');
+
+	</script>
+   </body>
+</html>

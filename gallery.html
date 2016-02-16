@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!--[if lt IE 7]> <html lang="en" class="no-js ie6"> <![endif]-->
+<!--[if IE 7]>    <html lang="en" class="no-js ie7"> <![endif]-->
+<!--[if IE 8]>    <html lang="en" class="no-js ie8"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class='no-js' lang='en'>
+	<!--<![endif]-->
+	<head>
+		<meta charset='utf-8' />
+		<meta content='IE=edge,chrome=1' http-equiv='X-UA-Compatible' />
+		<title>Gallery - Robyn Graham - Wildlife Photography</title>
+
+		<meta content='Gallery of Robyn Graham Wildlife Photography' name='description' />
+		<meta content='Jack Berry' name='author' />
+
+		<meta name="distribution" content="global" />
+		<meta name="language" content="en" />
+		<meta content='width=device-width, initial-scale=1.0' name='viewport' />
+
+		<link rel="shortcut icon" href="favicon.ico" />
+
+		<link rel="stylesheet" href="css/jquery.maximage.css?v=1.2" type="text/css" media="screen" charset="utf-8" />
+		<link rel="stylesheet" href="css/screen.css?v=1.2" type="text/css" media="screen" charset="utf-8" />
+
+		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+		<style type="text/css" media="screen">
+			/* I wanted to center my loader */
+			#cycle-loader {
+				height:32px;
+				left:50%;
+				margin:-8px 0 0 -8px;
+				position:absolute;
+				top:50%;
+				width:32px;
+				z-index:999;
+			}
+
+			/*I want to avoid jumpiness as the JS loads, so I initially hide my cycle*/
+			#maximage {
+				display:none;/* Only use this if you fade it in again after the images load */
+				position:fixed !important;
+			}
+
+			/*Set my gradient above all images*/
+			#gradient {
+				left:0;
+				height:100%;
+				position:absolute;
+				top:0;
+				width:100%;
+				z-index:999;
+			}
+
+			/*Set my logo in bottom left*/
+			#logo {
+				font-family:'Helvetica Neue', helvetica;
+				color:white;
+				background-color:black;
+				bottom:30px;
+				height:auto;
+				left:30px;
+				position:absolute;
+				width:56px;
+				z-index:1000;
+			}
+			#logo img {
+				width:100%;
+			}
+
+			#arrow_left, #arrow_right {
+				bottom:30px;
+				height:67px;
+				position:absolute;
+				right:30px;
+				width:36px;
+				z-index:1000;
+			}
+			#arrow_left {
+				right:86px;
+			}
+
+			#arrow_left:hover, #arrow_right:hover {
+				bottom:29px;
+			}
+			#arrow_left:active, #arrow_right:active {
+				bottom:28px;
+			}
+
+			a {color:#666;text-decoration:none;}
+			a:hover {text-decoration:underline;}
+
+			.in-slide-content {
+				color:#333;
+				font-family:'Helvetica Neue', helvetica;
+				font-size:60px;
+				right:0;
+				margin:40px;
+				padding:20px;
+				z-index:9999; /* Show above .gradient */
+				text-shadow: 0 1px 0 #fff;
+				-webkit-font-smoothing:antialiased;
+			}
+			.light-text {color:#ddd;text-shadow: 0 1px 0 #666;}
+			.smaller-text {font-size:30px;}
+		</style>
+	</head>
+	<body>
+		<a href="index.html" id="logo"><b>&#60;Home</b></a>
+		<a href="" id="arrow_left"><img src="./img/gallery/arrow_left.png" alt="Slide Left" /></a>
+		<a href="" id="arrow_right"><img src="./img/gallery/arrow_right.png" alt="Slide Right" /></a>
+
+		<img id="cycle-loader" src="./img/gallery/ajax-loader.gif" />
+		<div id="maximage">
+
+			<div>
+                                <img src="./img/gallery/dog_eyes.JPG" alt="" />
+                                <img id="gradient" src="./img/gallery/gradient.png" alt="" />
+                                <div class="in-slide-content" style="display:none;">
+                                        <p>Coming Soon</p>
+                                </div>
+                        </div>
+
+
+			<img src="./img/gallery/bird_oslo.JPG" alt="" />
+			<img src="./img/gallery/duck_tromso.JPG" alt="" />
+			<img src="./img/gallery/wolf_polar.JPG" alt="" />
+			<img src="./img/gallery/fighting_polar.JPG" alt="" />
+			<img src="./img/gallery/northern_lights.JPG" alt="" />
+			<img src="./img/wolf3.JPG" alt="" />
+		</div>
+
+		<script src='http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js'></script>
+		<script src="./js/jquery.cycle.all.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./js/jquery.maximage.js" type="text/javascript" charset="utf-8"></script>
+
+		<script type="text/javascript" charset="utf-8">
+			$(function(){
+				$('#maximage').maximage({
+					cycleOptions: {
+						fx: 'fade',
+						speed: 1000, // Has to match the speed for CSS transitions in jQuery.maximage.css (lines 30 - 33)
+						timeout: 0,
+						prev: '#arrow_left',
+						next: '#arrow_right',
+						pause: 1,
+						before: function(last,current){
+							if(!$.browser.msie){
+								// Start HTML5 video when you arrive
+								if($(current).find('video').length > 0) $(current).find('video')[0].play();
+							}
+						},
+						after: function(last,current){
+							if(!$.browser.msie){
+								// Pauses HTML5 video when you leave it
+								if($(last).find('video').length > 0) $(last).find('video')[0].pause();
+							}
+						}
+					},
+					onFirstImageLoaded: function(){
+						jQuery('#cycle-loader').hide();
+						jQuery('#maximage').fadeIn('fast');
+					}
+				});
+
+				// Helper function to Fill and Center the HTML5 Video
+				jQuery('video,object').maximage('maxcover');
+
+				// To show it is dynamic html text
+				jQuery('.in-slide-content').delay(1200).fadeIn();
+			});
+		</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-73750578-1', 'auto');
+  ga('send', 'pageview');
+
+</script> 
+ </body>
+</html>
