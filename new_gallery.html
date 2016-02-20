@@ -25,7 +25,7 @@
 		<!--[if lt IE 9]><script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
 		<style type="text/css" media="screen">
-
+			/* I wanted to center my loader */
 			#cycle-loader {
 				height:32px;
 				left:50%;
@@ -36,11 +36,13 @@
 				z-index:999;
 			}
 
+			/*I want to avoid jumpiness as the JS loads, so I initially hide my cycle*/
 			#maximage {
-				display:none;
+				display:none;/* Only use this if you fade it in again after the images load */
 				position:fixed !important;
 			}
 
+			/*Set my gradient above all images*/
 			#gradient {
 				left:0;
 				height:100%;
@@ -54,6 +56,7 @@
 			#logo {
 				font-family:'Helvetica Neue', helvetica;
 				color:white;
+				background-color:black;
 				bottom:30px;
 				height:auto;
 				left:30px;
@@ -103,7 +106,7 @@
 		</style>
 	</head>
 	<body>
-		<a href="index.html" id="logo"><img src="./img/home.png" alt="Home" /></a>
+		<a href="index.html" id="logo"><b>&#60;Home</b></a>
 		<a href="" id="arrow_left"><img src="./img/gallery/arrow_left.png" alt="Slide Left" /></a>
 		<a href="" id="arrow_right"><img src="./img/gallery/arrow_right.png" alt="Slide Right" /></a>
 
@@ -136,7 +139,7 @@
 				$('#maximage').maximage({
 					cycleOptions: {
 						fx: 'fade',
-						speed: 1000,
+						speed: 1000, // Has to match the speed for CSS transitions in jQuery.maximage.css (lines 30 - 33)
 						timeout: 0,
 						prev: '#arrow_left',
 						next: '#arrow_right',
@@ -176,6 +179,6 @@
   ga('create', 'UA-73750578-1', 'auto');
   ga('send', 'pageview');
 
-</script>
+</script> 
  </body>
 </html>
