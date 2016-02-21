@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <title>Gallery - Robyn Graham - Wildlife Photography</title>
+        <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
+        <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick-theme.css"/>
+   <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+        <style>
+            body {}
+
+            html, body, #page {
+                background-color:white;
+                height: 100%;
+                width: 100%;
+                margin: 0;
+                padding: 0;
+            }
+
+            .gallery
+            {
+            height: 100%;
+            margin: 0px;
+            padding: 0px;
+            text-align: center;
+            }
+
+            .slider-for
+            {
+
+            }
+
+            * { box-sizing: border-box; }
+
+/* force scrollbar */
+html { overflow-y: scroll; }
+
+body { font-family: sans-serif; }
+
+/* ---- grid ---- */
+
+.grid {
+  background: #DDD;
+}
+
+/* clear fix */
+.grid:after {
+  content: '';
+  display: block;
+  clear: both;
+}
+
+/* ---- .grid-item ---- */
+
+.grid-sizer,
+.grid-item {
+  width: 33.333%;
+}
+
+.grid-item {
+  float: left;
+}
+
+.grid-item img {
+  display: block;
+  max-width: 100%;
+}
+        </style>
+  </head>
+  <body onload="updateGallery( 'wolves_div', 1 )">
+    <div class="gallery">
+        <div class="slider slider-nav">
+			<div id= "wolves"><h3>Wolves</h3></div>
+			<div id= "northern"><h3>Northern Lights</h3></div>
+			<div id= "tromso"><h3>Troms&#248;</h3></div>
+			<div id= "londonzoo"><h3>London Zoo</h3></div>
+		    <div id= "pentax"><h3>Pentax</h3></div>
+		    <div id= "macro"><h3>Macro</h3></div>
+		</div>
+        <!--<div id="oldi"></div>-->
+		<div class="slider slider-for">
+
+            <div class="grid" id="wolves_div">
+                <div class="grid-sizer"></div>
+
+            </div>
+
+            <div class="grid" id="northern_div">
+
+            </div>
+
+            <div class="grid" id="tromso_div">
+
+            </div>
+
+            <div class="grid" id="londonzoo_div">
+
+            </div>
+
+            <div class="grid" id="pentax_div">
+
+            </div>
+
+            <div class="grid" id="macro_div">
+
+            </div>
+	    </div>
+    </div>
+
+    <script type="text/javascript" src="http://stylehatch.github.io/photoset-grid/jquery.photoset-grid.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+    <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+
+    <script type="text/javascript">
+
+        $('.slider-for').slick({
+            slidesToShow: 1,
+            slidesToScroll: 1,
+            arrows: false,
+            fade: true,
+            asNavFor: '.slider-nav'
+        });
+
+        $('.slider-nav').slick({
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            asNavFor: '.slider-for',
+            dots: false,
+            centerMode: true,
+            focusOnSelect: true
+        });
+    </script>
+
+    <script>
+    $('.photoset-grid-lightbox').photosetGrid({
+    highresLinks: true,
+    rel: 'withhearts-gallery',
+    gutter: '2px',
+
+    onComplete: function(){
+    $('.photoset-grid-lightbox').attr('style', '');
+    $('.photoset-grid-lightbox a').colorbox({
+        photo: true,
+        scalePhotos: true,
+        maxHeight:'90%',
+        maxWidth:'90%'
+        });
+        }
+    });
+    </script>
+
+    <script type="text/javascript" src="http://gridster.net/demos/assets/jquery.js"></script>
+    <script type="text/javascript" src="http://gridster.net/dist/jquery.gridster.js" charset="utf-8"></script>
+
+    <script type="text/javascript">
+
+        //var image_list = ["./img/gallery/bird_oslo.JPG", "./img/gallery/duck_tromso.JPG", "img/gallery/fighting_polar.JPG"];
+
+        function addImagesToGrid( json_data, album ){
+
+            //document.getElementById('oldi').innerText = json_data.length;
+            //document.getElementById('oldi').innerText = album;
+
+            json_data.forEach( function( i ) {
+                var new_row = document.createElement("div");
+                    new_row.className = "grid-item";
+
+
+                var images = document.createElement( 'img' );
+                    images.src = i.url;
+                    images.alt = i.alt;
+
+                    new_row.appendChild( images );
+
+                    var src = document.getElementById( album );
+                        src.appendChild(new_row);
+                });
+
+
+        }
+
+        function loadImages() {
+            grid = document.querySelector('.grid');
+
+            var msnry;
+
+            imagesLoaded( grid, function() {
+                msnry = new Masonry( grid, {
+                itemSelector: '.grid-item',
+                columnWidth: '.grid-sizer',
+                percentPosition: true
+                });
+            });
+        }
+
+
+        function updateGallery( album_div, page ) {
+                var req = new XMLHttpRequest();
+                req.addEventListener( "error", function() {
+                        console.log( this.responseText );
+                });
+
+                req.addEventListener( "load", function() {
+                        var json_data = JSON.parse( this.responseText );
+                        //setNewMarkers( map, json_data );
+
+                        addImagesToGrid( json_data, album_div );
+
+                        loadImages();
+
+                });
+
+                req.open( 'POST', 'data' );
+                req.setRequestHeader( 'Content-Type', 'application/json' );
+                req.send( JSON.stringify( { album:album_div, pagenum:page }));
+
+        }
+
+        $('#northern').one('click', function() {
+            updateGallery( "northern_div", 1 );
+        });
+
+        $('#tromso').one('click', function() {
+            updateGallery( "tromso_div", 1 );
+        });
+
+        $('#londonzoo').one('click', function() {
+            updateGallery( "londonzoo_div", 1 );
+        });
+
+        $('#pentax').one('click', function() {
+            updateGallery( "pentax_div", 1 );
+        });
+
+        $('#macro').one('click', function() {
+            updateGallery( "macro_div", 1 );
+        });
+
+    </script>
+  </body>
+</html>
