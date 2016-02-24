@@ -4,8 +4,9 @@
   <title>Gallery - Robyn Graham - Wildlife Photography</title>
         <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
         <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick-theme.css"/>
-   <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
         <style>
             body {}
 
@@ -15,6 +16,11 @@
                 width: 100%;
                 margin: 0;
                 padding: 0;
+            }
+
+            .slick-slider
+            {
+                margin-bottom: 0px;
             }
 
             .gallery
@@ -77,7 +83,8 @@ body { font-family: sans-serif; }
 		    <div id= "pentax"><h3>Pentax</h3></div>
 		    <div id= "macro"><h3>Macro</h3></div>
 		</div>
-        <!--<div id="oldi"></div>-->
+        <div id="scroll_size"></div>
+        <div id="page_size"></div>
 		<div class="slider slider-for">
 
             <div class="grid" id="wolves_div">
@@ -105,12 +112,14 @@ body { font-family: sans-serif; }
 
             </div>
 	    </div>
+
     </div>
 
     <script type="text/javascript" src="http://stylehatch.github.io/photoset-grid/jquery.photoset-grid.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script type="text/javascript" src="http://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
     <script type="text/javascript" src="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.min.js"></script>
+    <script type="text/javascript" src="http://fredwu.github.io/jquery-endless-scroll/js/jquery.endless-scroll.js"></script>
 
     <script type="text/javascript">
 
@@ -131,36 +140,13 @@ body { font-family: sans-serif; }
             focusOnSelect: true
         });
     </script>
-
-    <script>
-    $('.photoset-grid-lightbox').photosetGrid({
-    highresLinks: true,
-    rel: 'withhearts-gallery',
-    gutter: '2px',
-
-    onComplete: function(){
-    $('.photoset-grid-lightbox').attr('style', '');
-    $('.photoset-grid-lightbox a').colorbox({
-        photo: true,
-        scalePhotos: true,
-        maxHeight:'90%',
-        maxWidth:'90%'
-        });
-        }
-    });
-    </script>
-
     <script type="text/javascript" src="http://gridster.net/demos/assets/jquery.js"></script>
     <script type="text/javascript" src="http://gridster.net/dist/jquery.gridster.js" charset="utf-8"></script>
 
+
     <script type="text/javascript">
 
-        //var image_list = ["./img/gallery/bird_oslo.JPG", "./img/gallery/duck_tromso.JPG", "img/gallery/fighting_polar.JPG"];
-
         function addImagesToGrid( json_data, album ){
-
-            //document.getElementById('oldi').innerText = json_data.length;
-            //document.getElementById('oldi').innerText = album;
 
             json_data.forEach( function( i ) {
                 var new_row = document.createElement("div");
@@ -203,7 +189,6 @@ body { font-family: sans-serif; }
 
                 req.addEventListener( "load", function() {
                         var json_data = JSON.parse( this.responseText );
-                        //setNewMarkers( map, json_data );
 
                         addImagesToGrid( json_data, album_div );
 
@@ -217,25 +202,72 @@ body { font-family: sans-serif; }
 
         }
 
-        $('#northern').one('click', function() {
-            updateGallery( "northern_div", 1 );
+
+
+currentdiv = "wolves_div";
+
+        $('#wolves').click(function() {
+                $(".grid").empty();
+                $(this).scrollTop(0);
+                updateGallery( "wolves_div", 1 );
+                currentdiv = "wolves_div";
         });
 
-        $('#tromso').one('click', function() {
+        $('#northern').click(function() {
+            $(".grid").empty();
+            $(this).scrollTop(0);
+            updateGallery( "northern_div", 1 );
+            currentdiv = "northern_div";
+        });
+
+        $('#tromso').click(function() {
+            $(".grid").empty();
+            $(this).scrollTop(0);
+            currentdiv = "tromso_div";
             updateGallery( "tromso_div", 1 );
         });
 
-        $('#londonzoo').one('click', function() {
+        $('#londonzoo').click(function() {
+            $(".grid").empty();
+            $(this).scrollTop(0);
+            currentdiv = "londonzoo_div";
             updateGallery( "londonzoo_div", 1 );
         });
 
-        $('#pentax').one('click', function() {
+        $('#pentax').click('click', function() {
+            $(".grid").empty();
+            $(this).scrollTop(0);
             updateGallery( "pentax_div", 1 );
+            currentdiv = "pentax_div";
         });
 
-        $('#macro').one('click', function() {
+        $('#macro').click(function() {
+            $(".grid").empty();
+            $(this).scrollTop(0);
             updateGallery( "macro_div", 1 );
+            currentdiv = "macro_div";
         });
+
+
+
+busy = false;
+
+$(window).scroll(function()
+{
+    if($(window).scrollTop() == $(document).height() - $(window).height())
+    {
+	    busy = true;
+        updateGallery( currentdiv, 1 );
+        //window.alert("here");
+        busy = false;
+    }
+
+    //$('.slick-slider').css('top', $(this).scrollTop());
+
+
+});
+
+
 
     </script>
   </body>
