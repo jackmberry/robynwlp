@@ -104,7 +104,7 @@ pentax_div = [
 
 if __name__ == '__main__':
 	pypath = os.path.dirname( sys.argv[0])
-	rootdir = os.path.abspath ( os.path.join (pypath, '..'))
+	rootdir = os.path.abspath ( os.path.join (pypath, '../..'))
 
         app = App()
         app.data = Data()
