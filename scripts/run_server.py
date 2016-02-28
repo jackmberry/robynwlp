@@ -4,6 +4,8 @@ import cherrypy
 import os
 import sys
 import simplejson as json
+import get_images
+from bson import ObjectId
 
 class App( object ):
 	exposed = True
@@ -22,84 +24,15 @@ class Data( object ):
                 payload = cherrypy.request.json
                 album = payload[ 'album' ]
                 pagenum = payload[ 'pagenum' ]
-                json_news = []
-                ##json_album = json_parser.GetAlbum("table", "album","pagenum")
+               	print( album)
+                print(pagenum)
+		print(json.dumps(payload))
 
-                print(album)
-
-                if( album == "wolves_div" ):
-                    json_news = wolves_div
-                    print("wolves")
-
-                if( album == "northern_div" ):
-                    json_news = northern_div
-                    print("northern")
-
-                if( album == "tromso_div" ):
-                    json_news = tromso_div
-                    print("tromso")
-
-                if( album == "londonzoo_div" ):
-                    json_news = londonzoo_div
-                    print("zoo")
-
-                if( album == "pentax_div" ):
-                    json_news = pentax_div
-                    print("pentax")
-
-                if( album == "macro_div" ):
-                    json_news = macro_div
-                    print("macro")
-
-
+		json_album = get_images.getCollectionPage(album,pagenum)
+		
                 print(json.dumps(payload))
-                return json_news
-
-wolves_div = [
-    {"url":"./img/gallery/wolf_polar.JPG", "alt":"Wolf", "thumb":"blank"},
-    {"url":"./img/gallery/wolf_polar.JPG", "alt":"Wolf", "thumb":"blank"},
-    {"url":"./img/gallery/wolf_polar.JPG", "alt":"Wolf", "thumb":"blank"},
-    {"url":"./img/gallery/wolf_polar.JPG", "alt":"Wolf", "thumb":"blank"},
-    {"url":"./img/gallery/wolf_polar.JPG", "alt":"Wolf", "thumb":"blank"},
-    {"url":"./img/gallery/wolf_polar.JPG", "alt":"Wolf", "thumb":"blank"}
-
-    ]
-
-northern_div = [
-    {"url":"./img/gallery/northern_lights.JPG", "alt":"Northern Lights", "thumb":"blank"},
-    {"url":"./img/gallery/northern_lights.JPG", "alt":"Northern Lights", "thumb":"blank"},
-    {"url":"./img/gallery/northern_lights.JPG", "alt":"Northern Lights", "thumb":"blank"},
-    {"url":"./img/gallery/northern_lights.JPG", "alt":"Northern Lights", "thumb":"blank"},
-    {"url":"./img/gallery/northern_lights.JPG", "alt":"Northern Lights", "thumb":"blank"},
-    {"url":"./img/gallery/northern_lights.JPG", "alt":"Northern Lights", "thumb":"blank"}
-]
-
-tromso_div = [
-    {"url":"./img/gallery/duck_tromso.JPG", "alt":"Duck Tromso", "thumb":"blank"},
-    {"url":"./img/gallery/duck_tromso.JPG", "alt":"Duck Tromso", "thumb":"blank"},
-    {"url":"./img/gallery/duck_tromso.JPG", "alt":"Duck Tromso", "thumb":"blank"},
-    {"url":"./img/gallery/duck_tromso.JPG", "alt":"Duck Tromso", "thumb":"blank"},
-    {"url":"./img/gallery/duck_tromso.JPG", "alt":"Duck Tromso", "thumb":"blank"},
-    {"url":"./img/gallery/duck_tromso.JPG", "alt":"Duck Tromso", "thumb":"blank"}
-]
-
-londonzoo_div = [
-    {"url":"./img/gallery/bird_oslo.JPG", "alt":"Bird Oslo", "thumb":"blank"},
-    {"url":"./img/gallery/bird_oslo.JPG", "alt":"Bird Oslo", "thumb":"blank"},
-    {"url":"./img/gallery/bird_oslo.JPG", "alt":"Bird Oslo", "thumb":"blank"},
-    {"url":"./img/gallery/bird_oslo.JPG", "alt":"Bird Oslo", "thumb":"blank"},
-    {"url":"./img/gallery/bird_oslo.JPG", "alt":"Bird Oslo", "thumb":"blank"},
-    {"url":"./img/gallery/bird_oslo.JPG", "alt":"Bird Oslo", "thumb":"blank"}
-]
-
-pentax_div = [
-    {"url":"img/gallery/fighting_polar.JPG","alt":"Fighting Reindeer", "thumb":"blank"},
-    {"url":"img/gallery/fighting_polar.JPG","alt":"Fighting Reindeer", "thumb":"blank"},
-    {"url":"img/gallery/fighting_polar.JPG","alt":"Fighting Reindeer", "thumb":"blank"},
-    {"url":"img/gallery/fighting_polar.JPG","alt":"Fighting Reindeer", "thumb":"blank"},
-    {"url":"img/gallery/fighting_polar.JPG","alt":"Fighting Reindeer", "thumb":"blank"},
-    {"url":"img/gallery/fighting_polar.JPG","alt":"Fighting Reindeer", "thumb":"blank"}
-]
+                print(json.dumps(json_album))
+		return json.dumps(json_album)
 
 
 if __name__ == '__main__':

@@ -4,63 +4,71 @@ import os,json,sys
 from bson.json_util import dumps
 client = MongoClient()
 db = client.robynwlp
+table = db.gallery
 
 from datetime import datetime
 
-def buildGalleryJSON( source_folder, collection, photographer, website, page ):
+def buildJSONAndInsert( image_list, source_folder, collection, photographer, website, page ):
 	input_json = [{
-                "images": imagesFromDirJSON( source_folder, collection, page ),
+                "images": imagesFromDirJSON( image_list, source_folder, collection),
                 "collection": collection,
                 "photographer": photographer,
-                "website": website
+                "website": website,
+		"page":page
          }]
 	print dumps(input_json)
 	
-	return dumps(input_json)
+	insertIntoTable(dumps(input_json))
 
 	
-def imagesFromDirJSON( source_folder, collection, page ):
+def imagesFromDirJSON( image_list, source_folder, collection ):
 	json_images = []
-	count = 0
-
-	print(source_folder)
-	print(collection)
-	for file in os.listdir(source_folder):
-    		if count == 6:
-			page += 1
-			count = 0
-		else: 
-			count += 1
-		
-		if file.endswith(".JPG"):
-        		name = os.path.basename(file)
-			url = file
-			alt = collection
-			json_img = {"page":str(page),"name":name, "url":url, "alt":alt }
-			json_images.append(json_img)	
-	#print(dumps(json_images))					
+	
+	for image in image_list: 
+        	name = os.path.basename(image)
+		url = source_folder + "/" + collection + "/" + image
+		alt = collection
+		json_img = {"name":name, "url":url, "alt":alt }
+		json_images.append(json_img)	
+	
 	return json_images
 	
 
-def insertIntoTable( table , input_json):
+def insertIntoTable( input_json):
 	try:
   		result = table.insert( json.loads(input_json) )
+		print result	
 	
 	except client.errors.OperationFailure as e:
     		print "FAIL!"
 		print e.code
     		print e.details
 
+def searchForFilesAndInsert( images_loc, collection, author, site, start_page ):
+	page = int(start_page) #logic here for checking if collection already exists
+	source_folder = images_loc + "/" + collection
+	count = 0
+	images_list = []
+
+	for file in os.listdir(source_folder):
+    		if file.endswith(".JPG"):	
+			if count == 6:
+				buildJSONAndInsert( images_list, images_loc, collection, author, site, page)
+				page += 1
+				count = 0
+				del images_list[:]
+				images_list.append(file)
+			else:
+				count += 1
+				images_list.append(file)
 
 if __name__ == "__main__":
 	author = "robyn graham"
 	site = "robynwlp"
-	page = 1
 	folder = sys.argv[1]
-	
+	start_page = sys.argv[2]	
 
-	gallery_json = buildGalleryJSON( "../out/" + folder,folder,author,site,page )
-	insertIntoTable( db.gallery, gallery_json )
+	searchForFilesAndInsert( "../img/out/", folder, author, site, start_page )
 	print("done")
 
 

@@ -4,6 +4,9 @@
   <title>Gallery - Robyn Graham - Wildlife Photography</title>
         <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick.css"/>
         <link rel="stylesheet" type="text/css" href="http://cdn.jsdelivr.net/jquery.slick/1.5.9/slick-theme.css"/>
+
+	<link rel="stylesheet" type="text/css" href="http://lokeshdhakar.com/projects/lightbox2/css/lightbox.css"/>
+
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
@@ -73,15 +76,15 @@ body { font-family: sans-serif; }
 }
         </style>
   </head>
-  <body onload="updateGallery( 'wolves_div', 1 )">
+  <body onload="updateGallery( 'wolves', 1 )">
     <div class="gallery">
         <div class="slider slider-nav">
 			<div id= "wolves"><h3>Wolves</h3></div>
 			<div id= "northern"><h3>Northern Lights</h3></div>
-			<div id= "tromso"><h3>Troms&#248;</h3></div>
-			<div id= "londonzoo"><h3>London Zoo</h3></div>
-		    <div id= "pentax"><h3>Pentax</h3></div>
-		    <div id= "macro"><h3>Macro</h3></div>
+			<div id= "polar"><h3>Polar Park</h3></div>
+			<div id= "london_zoo"><h3>London Zoo</h3></div>
+		        <div id= "pentax"><h3>Pentax</h3></div>
+		        <div id= "macro"><h3>Macro</h3></div>
 		</div>
         <div id="scroll_size"></div>
         <div id="page_size"></div>
@@ -92,20 +95,20 @@ body { font-family: sans-serif; }
 
             </div>
 
-            <div class="grid" id="northern_div">
+            <div class="grid" id="northern_lights_div">
 
             </div>
 
-            <div class="grid" id="tromso_div">
+            <div class="grid" id="polar_park_div">
 
             </div>
 
-            <div class="grid" id="londonzoo_div">
+            <div class="grid" id="london_zoo_div">
 
             </div>
 
             <div class="grid" id="pentax_div">
-
+		<div class="grid-sizer"></div>
             </div>
 
             <div class="grid" id="macro_div">
@@ -142,28 +145,30 @@ body { font-family: sans-serif; }
     </script>
     <script type="text/javascript" src="http://gridster.net/demos/assets/jquery.js"></script>
     <script type="text/javascript" src="http://gridster.net/dist/jquery.gridster.js" charset="utf-8"></script>
-
+    <script type="text/javascript" src="http://lokeshdhakar.com/projects/lightbox2/js/lightbox-plus-jquery.min.js" charset="utf-8"></script>
 
     <script type="text/javascript">
 
         function addImagesToGrid( json_data, album ){
+	    
+		json_images = JSON.parse(json_data).images;
+	
+		//var test = document.getElementById( 'scroll_size');
+                //test.innerText = album; 
 
-            json_data.forEach( function( i ) {
-                var new_row = document.createElement("div");
-                    new_row.className = "grid-item";
+		json_images.forEach( function( i ) {
+                	var new_row = document.createElement("div");
+                    	new_row.className = "grid-item";
 
-
-                var images = document.createElement( 'img' );
-                    images.src = i.url;
-                    images.alt = i.alt;
-
+                	var images = document.createElement( 'img' );
+                    	images.src = i.url;
+                    	images.alt = i.alt;
+			images.data-lightbox = json_data.album;
                     new_row.appendChild( images );
 
-                    var src = document.getElementById( album );
+                    var src = document.getElementById( album + "_div" );
                         src.appendChild(new_row);
-                });
-
-
+                });	
         }
 
         function loadImages() {
@@ -186,7 +191,7 @@ body { font-family: sans-serif; }
                 req.addEventListener( "error", function() {
                         console.log( this.responseText );
                 });
-
+		//window.alert("div " + album_div + " page " + page);
                 req.addEventListener( "load", function() {
                         var json_data = JSON.parse( this.responseText );
 
@@ -203,51 +208,56 @@ body { font-family: sans-serif; }
         }
 
 
-
-currentdiv = "wolves_div";
+current_page_count = 1;
+currentdiv = "wolves";
 
         $('#wolves').click(function() {
             $(".grid").empty();
             $(this).scrollTop(0);
-            currentdiv = "wolves_div";
+            currentdiv = "wolves";
             updateGallery( "wolves", 1 );
-        });
+            current_page_count = 1;
+	});
 
         $('#northern').click(function() {
             $(".grid").empty();
             $(this).scrollTop(0);
-            currentdiv = "northern";
+            currentdiv = "northern_lights";
             updateGallery( "northern_lights", 1 );
-        });
+            current_page_count = 1;
+	});
 
-        $('#tromso').click(function() {
+        $('#polar').click(function() {
             $(".grid").empty();
             $(this).scrollTop(0);
-            currentdiv = "tromso_div";
-            updateGallery( "nature_landscape", 1 );
-        });
+            currentdiv = "polar_park";
+            updateGallery( "polar_park", 1 );
+            current_page_count = 1;
+	});
 
-        $('#londonzoo').click(function() {
+        $('#london_zoo').click(function() {
             $(".grid").empty();
             $(this).scrollTop(0);
-            currentdiv = "londonzoo_div";
+            currentdiv = "london_zoo";
             updateGallery( "london_zoo", 1 );
-        });
+            current_page_count = 1;
+	});
 
         $('#pentax').click('click', function() {
             $(".grid").empty();
             $(this).scrollTop(0);
             currentdiv = "pentax";
             updateGallery( "pentax", 1 );
-        });
+            current_page_count = 1;	
+	});
 
         $('#macro').click(function() {
             $(".grid").empty();
             $(this).scrollTop(0);
             currentdiv = "macro";
             updateGallery( "macro", 1 );
-        });
-
+            current_page_count = 1;
+	});
 
 
 busy = false;
@@ -256,10 +266,11 @@ $(window).scroll(function()
 {
     if($(window).scrollTop() == $(document).height() - $(window).height())
     {
-	    busy = true;
-        updateGallery( currentdiv, 1 );
-        //window.alert("here");
-        busy = false;
+	current_page_count = current_page_count + 1; 
+	busy = true;
+        
+        updateGallery( currentdiv, current_page_count );
+	busy = false;
     }
 
     //$('.slick-slider').css('top', $(this).scrollTop());

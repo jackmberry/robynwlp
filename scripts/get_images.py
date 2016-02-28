@@ -10,14 +10,19 @@ def getCollection(collection):
     		print(document)
 
 def getCollectionPage(collection, page):
-        cursor = db.gallery.find( {'collection':collection,'images.page':page} )
-        for document in cursor:
+        cursor = db.gallery.find( {'collection':collection,'page':page},{'_id':0} )
+        
+	for document in cursor:
                 print(document)
-
+	
+	if document is None:
+		return None
+	else:	
+		return document
 
 
 
 if __name__ == "__main__":
 #	getCollection(sys.argv[1])
 	print("go")
-    	getCollectionPage(sys.argv[1],str(sys.argv[2]))
+    	getCollectionPage(sys.argv[1],int(sys.argv[2]))
