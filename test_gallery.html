@@ -207,45 +207,45 @@ body { font-family: sans-serif; }
 currentdiv = "wolves_div";
 
         $('#wolves').click(function() {
-                $(".grid").empty();
-                $(this).scrollTop(0);
-                updateGallery( "wolves_div", 1 );
-                currentdiv = "wolves_div";
+            $(".grid").empty();
+            $(this).scrollTop(0);
+            currentdiv = "wolves_div";
+            updateGallery( "wolves", 1 );
         });
 
         $('#northern').click(function() {
             $(".grid").empty();
             $(this).scrollTop(0);
-            updateGallery( "northern_div", 1 );
-            currentdiv = "northern_div";
+            currentdiv = "northern";
+            updateGallery( "northern_lights", 1 );
         });
 
         $('#tromso').click(function() {
             $(".grid").empty();
             $(this).scrollTop(0);
             currentdiv = "tromso_div";
-            updateGallery( "tromso_div", 1 );
+            updateGallery( "nature_landscape", 1 );
         });
 
         $('#londonzoo').click(function() {
             $(".grid").empty();
             $(this).scrollTop(0);
             currentdiv = "londonzoo_div";
-            updateGallery( "londonzoo_div", 1 );
+            updateGallery( "london_zoo", 1 );
         });
 
         $('#pentax').click('click', function() {
             $(".grid").empty();
             $(this).scrollTop(0);
-            updateGallery( "pentax_div", 1 );
-            currentdiv = "pentax_div";
+            currentdiv = "pentax";
+            updateGallery( "pentax", 1 );
         });
 
         $('#macro').click(function() {
             $(".grid").empty();
             $(this).scrollTop(0);
-            updateGallery( "macro_div", 1 );
-            currentdiv = "macro_div";
+            currentdiv = "macro";
+            updateGallery( "macro", 1 );
         });
 
 
