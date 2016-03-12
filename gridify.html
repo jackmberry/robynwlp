@@ -35,10 +35,47 @@
 </div>
 
 <script type="text/javascript" src="js/gridify.js"></script>
+
 <script type="text/javascript">
+		function addImagesToGrid( json_data, album ){
+		
+			json_images = JSON.parse(json_data).images;
+			json_images.forEach( function( i ) {
+                	
+                	var images = document.createElement( "img" );
+                    	images.src = i.url;
+                    	images.alt = i.alt; 
+                    	 
+                    var grid_div = document.getElementById( "grid" );
+                        grid_div.appendChild(new_row);
+                });	
+        }
+
+        function updateGallery( album_div, page ) {
+                var req = new XMLHttpRequest();
+                req.addEventListener( "error", function() {
+                        console.log( this.responseText );
+                });
+                req.addEventListener( "load", function() {
+                        var json_data = JSON.parse( this.responseText );
+                        addImagesToGrid( json_data, "wolves_div" );
+                        loadImages();
+                });
+
+                req.open( 'POST', 'data' );
+                req.setRequestHeader( 'Content-Type', 'application/json' );
+                req.send( JSON.stringify( { album:album_div, pagenum:page }));
+        }
+        
+        function alertMe( alert_message ) {
+        	window.alert("this is the message " + alert_message );
+        }
+ 
     window.onload = function(){
+     
+    	
         var options =
-        {
+        { 
             srcNode: 'img',             // grid items (class, node)
             margin: '20px',             // margin in pixel, default: 0px
             width: '250px',             // grid item width in pixel, default: 220px
